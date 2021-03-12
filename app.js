@@ -1,13 +1,4 @@
 'use stric'
-//
-global.host = 'host.docker.internal'; //host.docker.internal
-global.port = {
-  audit: '3000',
-};
-global.path = {
-  audit: '/exec/createUserSC',
-};
-//
 var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
@@ -21,7 +12,7 @@ var app = express();
 
 //Cargar rutas
 //var user_routes = require('./routes/user');
-var api_gateway_routes = require('./routes/index');
+var traceability = require('./routes/index');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -42,6 +33,6 @@ app.use((req, res, next) => {
 
 //Carga de rutas base
 //app.use('/api', user_routes);
-app.use('/', api_gateway_routes);
+app.use('/', traceability);
 
 module.exports = app;

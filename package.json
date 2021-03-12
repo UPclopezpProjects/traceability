@@ -1,7 +1,7 @@
 {
   "name": "appavocadoweb",
   "version": "1.0.0",
-  "description": "Microservicio 'Merchant'",
+  "description": "Microservicio 'Traceability'",
   "main": "index.js",
   "scripts": {
     "starts": "node ./bin/www",

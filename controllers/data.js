@@ -27,7 +27,7 @@ function traceability(req, res) {
     }
   }
   //console.log(jsonData.A.id);
-  if(req.body){
+  if(req.body.QR){
     res.status(200).send({message: jsonData});
   }else {
     res.status(500).send({message: false});
