@@ -7,7 +7,6 @@ var cors = require('cors');
 var logger = require('morgan');
 //New
 
-
 var app = express();
 
 //Cargar rutas
