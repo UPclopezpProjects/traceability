@@ -21,7 +21,6 @@ async function traceability(req, res) {
       stage: 'Acopio',
       description:'Description acopio'
     },
-
     D:{
       id: 'P01',
       date: 'xx/xx/xxxx',
@@ -40,9 +39,9 @@ async function traceability(req, res) {
   try {
     //const resMerchant = await axios.post(`http://host.docker.internal:3002/getData/?code=${split[3]}`, { code: split[3]});
     const resMerchant = await axios.post('http://host.docker.internal:3002/getData', { code: split[0] });
-    const resCarrier = await axios.post('http://host.docker.internal:3003/getData', { code: split[1]});
-    const resAcopio = await axios.post('http://host.docker.internal:3004/getData', { code: split[2]});
-    const resProductor = await axios.post('http://host.docker.internal:3005/getData', { code: split[3]});
+    const resCarrier = await axios.post('http://host.docker.internal:3003/getData', { code: split[1] });
+    const resAcopio = await axios.post('http://host.docker.internal:3004/getData', { code: split[2] });
+    const resProductor = await axios.post('http://host.docker.internal:3005/getData', { code: split[3] });
     res.status(200).send({ A:  JSON.parse(resMerchant.data.message), B:  JSON.parse(resCarrier.data.message), C:  JSON.parse(resAcopio.data.message), D:  JSON.parse(resProductor.data.message) });
   } catch (error) {
     //console.log(error);
