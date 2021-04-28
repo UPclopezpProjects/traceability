@@ -3,8 +3,9 @@
 var mongoose = require('mongoose');
 var app = require('./app');
 var port = process.env.PORT || 3006;
-var mongoDB = 'mongodb://host.docker.internal:27017/traceability';
+//var mongoDB = 'mongodb://host.docker.internal:27017/traceability';
 //var mongoDB = 'mongodb://172.17.0.1:27017/api-gateway';
+var mongoDB = 'mongodb://database/traceability';
 
 mongoose.connect(mongoDB, {useFindAndModify: false, useUnifiedTopology: true, useNewUrlParser: true}, (err, res) => {
 	if(err){
