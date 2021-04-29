@@ -14,16 +14,16 @@ async function traceability(req, res) {
       data.push(merchantStored);
       switch (merchantStored.previousStage) {
         case 'Merchant':
-          searchInMerchant(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInMerchant(merchantStored.fid, data, res);
           break;
         case 'Carrier':
-          searchInCarrier(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInCarrier(merchantStored.fid, data, res);
           break;
         case 'Acopio':
-          searchInAcopio(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInAcopio(merchantStored.fid, data, res);
           break;
         case 'Productor':
-          searchInProductor(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInProductor(merchantStored.fid, data, res);
           break;
         case null:
           res.status(200).send({message: data});
@@ -62,23 +62,23 @@ async function traceability(req, res) {
 
 }
 
-function searchInMerchant(fid, previousStage, data, res) {
+function searchInMerchant(fid, data, res) {
   return new Promise(function(resolve, reject) {
     Merchant.findOne({ id: fid})
     .then(merchantStored => {
       data.push(merchantStored);
       switch (merchantStored.previousStage) {
         case 'Merchant':
-          searchInMerchant(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInMerchant(merchantStored.fid, data, res);
           break;
         case 'Carrier':
-          searchInCarrier(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInCarrier(merchantStored.fid, data, res);
           break;
         case 'Acopio':
-          searchInAcopio(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInAcopio(merchantStored.fid, data, res);
           break;
         case 'Productor':
-          searchInProductor(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInProductor(merchantStored.fid, data, res);
           break;
         case null:
           res.status(200).send({message: data});
@@ -98,23 +98,23 @@ function searchInMerchant(fid, previousStage, data, res) {
   });
 }
 
-function searchInCarrier(fid, previousStage, data, res) {
+function searchInCarrier(fid, data, res) {
   return new Promise(function(resolve, reject) {
     Carrier.findOne({ id: fid})
-    .then(merchantStored => {
-      data.push(merchantStored);
-      switch (merchantStored.previousStage) {
+    .then(carrierStored => {
+      data.push(carrierStored);
+      switch (carrierStored.previousStage) {
         case 'Merchant':
-          searchInMerchant(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInMerchant(carrierStored.fid, data, res);
           break;
         case 'Carrier':
-          searchInCarrier(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInCarrier(carrierStored.fid, data, res);
           break;
         case 'Acopio':
-          searchInAcopio(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInAcopio(carrierStored.fid, data, res);
           break;
         case 'Productor':
-          searchInProductor(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInProductor(carrierStored.fid, data, res);
           break;
         case null:
           res.status(200).send({message: data});
@@ -134,23 +134,23 @@ function searchInCarrier(fid, previousStage, data, res) {
   });
 }
 
-function searchInAcopio(fid, previousStage, data, res) {
+function searchInAcopio(fid, data, res) {
   return new Promise(function(resolve, reject) {
     Acopio.findOne({ id: fid})
-    .then(merchantStored => {
-      data.push(merchantStored);
-      switch (merchantStored.previousStage) {
+    .then(acopioStored => {
+      data.push(acopioStored);
+      switch (acopioStored.previousStage) {
         case 'Merchant':
-          searchInMerchant(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInMerchant(acopioStored.fid, data, res);
           break;
         case 'Carrier':
-          searchInCarrier(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInCarrier(acopioStored.fid, data, res);
           break;
         case 'Acopio':
-          searchInAcopio(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInAcopio(acopioStored.fid, data, res);
           break;
         case 'Productor':
-          searchInProductor(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInProductor(acopioStored.fid, data, res);
           break;
         case null:
           res.status(200).send({message: data});
@@ -170,23 +170,23 @@ function searchInAcopio(fid, previousStage, data, res) {
   });
 }
 
-function searchInProductor(fid, previousStage, data, res) {
+function searchInProductor(fid, data, res) {
   return new Promise(function(resolve, reject) {
     Productor.findOne({ id: fid})
-    .then(merchantStored => {
-      data.push(merchantStored);
-      switch (merchantStored.previousStage) {
+    .then(productorStored => {
+      data.push(productorStored);
+      switch (productorStored.previousStage) {
         case 'Merchant':
-          searchInMerchant(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInMerchant(productorStored.fid, data, res);
           break;
         case 'Carrier':
-          searchInCarrier(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInCarrier(productorStored.fid, data, res);
           break;
         case 'Acopio':
-          searchInAcopio(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInAcopio(productorStored.fid, data, res);
           break;
         case 'Productor':
-          searchInProductor(merchantStored.fid, merchantStored.previousStage, data, res);
+          searchInProductor(productorStored.fid, data, res);
           break;
         case null:
         case 'null':
