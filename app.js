@@ -1,4 +1,17 @@
 'use stric'
+
+global.host = {
+  api_gateway: '0.0.0.0',
+  aws: '52.202.214.13'
+};
+global.port = {
+  api_gateway: '80',
+  aws: '80'
+};
+global.path = {
+  images: '/images?id='
+};
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');

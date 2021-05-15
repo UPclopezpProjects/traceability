@@ -4,6 +4,13 @@ var Acopio = require('../models/Acopios');
 var Carrier = require('../models/Carriers');
 var Merchant = require('../models/Merchants');
 
+function endRequest(datas, res) {
+  for(var data of datas){
+    data.image = 'http://'+host.api_gateway+':'+port.api_gateway+''+path.images+''+data.image+'';
+  }
+  //var jsonData = JSON.stringify(data);
+  res.status(200).send({message: datas});
+}
 
 async function traceability(req, res) {
   var query = { code: req.body.QR, id: req.body.ID };
@@ -26,7 +33,9 @@ async function traceability(req, res) {
           searchInProductor(merchantStored.fid, data, res);
           break;
         case null:
-          res.status(200).send({message: data});
+        case 'null':
+          endRequest(data, res);
+          //res.status(200).send({message: data});
           break;
         default:
           res.status(404).send({message: 'default case in function traceability'});
@@ -81,7 +90,9 @@ function searchInMerchant(fid, data, res) {
           searchInProductor(merchantStored.fid, data, res);
           break;
         case null:
-          res.status(200).send({message: data});
+        case 'null':
+          endRequest(data, res);
+          //res.status(200).send({message: data});
           break;
         default:
           res.status(404).send({message: 'default case in function traceability'});
@@ -117,7 +128,9 @@ function searchInCarrier(fid, data, res) {
           searchInProductor(carrierStored.fid, data, res);
           break;
         case null:
-          res.status(200).send({message: data});
+        case 'null':
+          endRequest(data, res);
+          //res.status(200).send({message: data});
           break;
         default:
           res.status(404).send({message: 'default case in function traceability'});
@@ -153,7 +166,9 @@ function searchInAcopio(fid, data, res) {
           searchInProductor(acopioStored.fid, data, res);
           break;
         case null:
-          res.status(200).send({message: data});
+        case 'null':
+          endRequest(data, res);
+          //res.status(200).send({message: data});
           break;
         default:
           res.status(404).send({message: 'default case in function traceability'});
@@ -190,7 +205,8 @@ function searchInProductor(fid, data, res) {
           break;
         case null:
         case 'null':
-          res.status(200).send({message: data});
+          endRequest(data, res);
+          //res.status(200).send({message: data});
           break;
         default:
           res.status(404).send({message: 'default case in function traceability'});
@@ -235,6 +251,7 @@ function addDataProductor(req, res){
   productor.name = req.body.name;
   productor.previousStage = req.body.previousStage;
   productor.currentStage = req.body.currentStage;
+  productor.image = req.body.image;
   productor.save((err, productorStored) => {
     if(err) {
       res.status(500).send({ message: 'Error al guardar los datos' });
@@ -242,7 +259,7 @@ function addDataProductor(req, res){
       if(!productorStored) {
         res.status(404).send({ message: 'El dato no ha sido guardado' });
       }else{
-        res.status(200).send({ message: true, addData: 'Productor' });
+        res.status(200).send({ message: true, addData: 'Productor', info: productorStored });
       }
     }
   });
@@ -256,6 +273,7 @@ function addDataAcopio(req, res){
   acopio.name = req.body.name;
   acopio.previousStage = req.body.previousStage;
   acopio.currentStage = req.body.currentStage;
+  acopio.image = req.body.image;
   acopio.save((err, acopioStored) => {
     if(err) {
       res.status(500).send({ message: 'Error al guardar los datos' });
@@ -263,7 +281,7 @@ function addDataAcopio(req, res){
       if(!acopioStored) {
         res.status(404).send({ message: 'El dato no ha sido guardado' });
       }else{
-        res.status(200).send({ message: true, addData: 'Acopio' });
+        res.status(200).send({ message: true, addData: 'Acopio', info: acopioStored });
       }
     }
   });
@@ -277,6 +295,7 @@ function addDataCarrier(req, res){
   carrier.name = req.body.name;
   carrier.previousStage = req.body.previousStage;
   carrier.currentStage = req.body.currentStage;
+  carrier.image = req.body.image;
   carrier.save((err, carrierStored) => {
     if(err) {
       res.status(500).send({ message: 'Error al guardar los datos' });
@@ -284,7 +303,7 @@ function addDataCarrier(req, res){
       if(!carrierStored) {
         res.status(404).send({ message: 'El dato no ha sido guardado' });
       }else{
-        res.status(200).send({ message: true, addData: 'Carrier' });
+        res.status(200).send({ message: true, addData: 'Carrier', info: carrierStored });
       }
     }
   });
@@ -299,6 +318,7 @@ function addDataMerchant(req, res){
   merchant.name = req.body.name;
   merchant.previousStage = req.body.previousStage;
   merchant.currentStage = req.body.currentStage;
+  merchant.image = req.body.image;
   merchant.save((err, merchantStored) => {
     if(err) {
       res.status(500).send({ message: 'Error al guardar los datos' });
@@ -306,7 +326,7 @@ function addDataMerchant(req, res){
       if(!merchantStored) {
         res.status(404).send({ message: 'El dato no ha sido guardado' });
       }else{
-        res.status(200).send({ message: true, addData: 'Merchant' });
+        res.status(200).send({ message: true, addData: 'Merchant', info: merchantStored });
       }
     }
   });
