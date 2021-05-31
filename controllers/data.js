@@ -6,7 +6,7 @@ var Merchant = require('../models/Merchants');
 
 function endRequest(datas, res) {
   for(var data of datas){
-    data.image = 'http://'+host.api_gateway+':'+port.api_gateway+''+path.images+''+data.image+'';
+    data.image = 'http://'+host.aws+':'+port.aws+''+path.images+''+data.image+'';
   }
   //var jsonData = JSON.stringify(data);
   res.status(200).send({message: datas});
@@ -252,6 +252,7 @@ function addDataProductor(req, res){
   productor.previousStage = req.body.previousStage;
   productor.currentStage = req.body.currentStage;
   productor.image = req.body.image;
+  productor.description = req.body.description;
   productor.save((err, productorStored) => {
     if(err) {
       res.status(500).send({ message: 'Error al guardar los datos' });
@@ -274,6 +275,7 @@ function addDataAcopio(req, res){
   acopio.previousStage = req.body.previousStage;
   acopio.currentStage = req.body.currentStage;
   acopio.image = req.body.image;
+  acopio.description = req.body.description;
   acopio.save((err, acopioStored) => {
     if(err) {
       res.status(500).send({ message: 'Error al guardar los datos' });
@@ -296,6 +298,7 @@ function addDataCarrier(req, res){
   carrier.previousStage = req.body.previousStage;
   carrier.currentStage = req.body.currentStage;
   carrier.image = req.body.image;
+  carrier.description = req.body.description;
   carrier.save((err, carrierStored) => {
     if(err) {
       res.status(500).send({ message: 'Error al guardar los datos' });
@@ -319,6 +322,7 @@ function addDataMerchant(req, res){
   merchant.previousStage = req.body.previousStage;
   merchant.currentStage = req.body.currentStage;
   merchant.image = req.body.image;
+  merchant.description = req.body.description;
   merchant.save((err, merchantStored) => {
     if(err) {
       res.status(500).send({ message: 'Error al guardar los datos' });

@@ -8,7 +8,8 @@ var CarrierSchema = new Schema({
   name: {type: String, required: true, max: 100},
   previousStage: {type: String, required: true, max: 100},
   currentStage: {type: String, required: true, max: 100},
-  image: {type: String, required: true, max: 100}
+  image: {type: String, required: true, max: 100},
+  description: {type: String, required: true, max: 100}
   /*fid: [{
     id: {
       type: mongoose.Schema.ObjectId,

@@ -9,7 +9,8 @@ var MerchantSchema = new Schema({
   name: {type: String, required: true, max: 100},
   previousStage: {type: String, required: true, max: 100},
   currentStage: {type: String, required: true, max: 100},
-  image: {type: String, required: true, max: 100}
+  image: {type: String, required: true, max: 100},
+  description: {type: String, required: true, max: 100}
 });
 
 module.exports = mongoose.model('Merchant', MerchantSchema);
