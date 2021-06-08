@@ -44,7 +44,6 @@ app.use((req, res, next) => {
 });
 
 //Carga de rutas base
-//app.use('/api', user_routes);
 app.use('/', traceability);
 
 module.exports = app;

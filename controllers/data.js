@@ -103,7 +103,7 @@ function searchInMerchant(fid, data, res) {
       reject(err);
     })
     .catch(err => {
-      console.log(err);
+      //console.log(err);
       return res.status(505).json({message: "Error 505"});
     });
   });
@@ -179,7 +179,7 @@ function searchInAcopio(fid, data, res) {
       reject(err);
     })
     .catch(err => {
-      console.log(err);
+      //console.log(err);
       return res.status(505).json({message: "Error 505"});
     });
   });
@@ -217,7 +217,7 @@ function searchInProductor(fid, data, res) {
       reject(err);
     })
     .catch(err => {
-      console.log(err);
+      //console.log(err);
       return res.status(505).json({message: "Error 505"});
     });
   });
