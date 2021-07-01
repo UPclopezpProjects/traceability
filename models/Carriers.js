@@ -9,13 +9,7 @@ var CarrierSchema = new Schema({
   previousStage: {type: String, required: true, max: 100},
   currentStage: {type: String, required: true, max: 100},
   image: {type: String, required: true, max: 100},
-  description: {type: String, required: true, max: 100}
-  /*fid: [{
-    id: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Carrier'
-    }
-  }],*/
+  description: {type: String, required: true, max: 100}}
 });
 
 module.exports = mongoose.model('Carrier', CarrierSchema);
