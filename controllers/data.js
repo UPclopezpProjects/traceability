@@ -12,12 +12,16 @@ function endRequest(datas, res) {
   res.status(200).send({message: datas});
 }
 
-async function traceability(req, res) {
+async function traceabilityM(req, res) {
   var query = { code: req.body.QR, id: req.body.ID };
   var data = [];
   return new Promise(function(resolve, reject) {
     Merchant.findOne(query)
     .then(merchantStored => {
+      if (merchantStored == null || merchantStored == 'null') {
+        traceabilityC(req, res);
+        return;
+      }
       data.push(merchantStored);
       switch (merchantStored.previousStage) {
         case 'Merchant':
@@ -69,6 +73,137 @@ async function traceability(req, res) {
     console.log(error.response);
   }*/
 
+}
+
+async function traceabilityC(req, res) {
+  var query = { code: req.body.QR, id: req.body.ID };
+  var data = [];
+  return new Promise(function(resolve, reject) {
+    Carrier.findOne(query)
+    .then(carrierStored => {
+      if (carrierStored == null || carrierStored == 'null') {
+        traceabilityA(req, res);
+        return;
+      }
+      data.push(carrierStored);
+      switch (carrierStored.previousStage) {
+        case 'Merchant':
+          searchInMerchant(carrierStored.fid, data, res);
+          break;
+        case 'Carrier':
+          searchInCarrier(carrierStored.fid, data, res);
+          break;
+        case 'Acopio':
+          searchInAcopio(carrierStored.fid, data, res);
+          break;
+        case 'Productor':
+          searchInProductor(carrierStored.fid, data, res);
+          break;
+        case null:
+        case 'null':
+          endRequest(data, res);
+          //res.status(200).send({message: data});
+          break;
+        default:
+          res.status(404).send({message: 'default case in function traceability'});
+          break;
+      }
+    })
+    .then(undefined, function(err){
+      reject(err);
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(505).json({message: "Error 505"});
+    });
+  });
+}
+
+async function traceabilityA(req, res) {
+  var query = { code: req.body.QR, id: req.body.ID };
+  var data = [];
+  return new Promise(function(resolve, reject) {
+    Acopio.findOne(query)
+    .then(acopioStored => {
+      if (acopioStored == null || acopioStored == 'null') {
+        traceabilityP(req, res);
+        return;
+      }
+      data.push(acopioStored);
+      switch (acopioStored.previousStage) {
+        case 'Merchant':
+          searchInMerchant(acopioStored.fid, data, res);
+          break;
+        case 'Carrier':
+          searchInCarrier(acopioStored.fid, data, res);
+          break;
+        case 'Acopio':
+          searchInAcopio(acopioStored.fid, data, res);
+          break;
+        case 'Productor':
+          searchInProductor(acopioStored.fid, data, res);
+          break;
+        case null:
+        case 'null':
+          endRequest(data, res);
+          //res.status(200).send({message: data});
+          break;
+        default:
+          res.status(404).send({message: 'default case in function traceability'});
+          break;
+      }
+    })
+    .then(undefined, function(err){
+      reject(err);
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(505).json({message: "Error 505"});
+    });
+  });
+}
+
+async function traceabilityP(req, res) {
+  var query = { code: req.body.QR, id: req.body.ID };
+  var data = [];
+  return new Promise(function(resolve, reject) {
+    Productor.findOne(query)
+    .then(productorStored => {
+      if (productorStored == null || productorStored == 'null') {
+        res.status(200).send({message: 'El dato no existe'});
+      }
+      data.push(productorStored);
+      switch (productorStored.previousStage) {
+        case 'Merchant':
+          searchInMerchant(productorStored.fid, data, res);
+          break;
+        case 'Carrier':
+          searchInCarrier(productorStored.fid, data, res);
+          break;
+        case 'Acopio':
+          searchInAcopio(productorStored.fid, data, res);
+          break;
+        case 'Productor':
+          searchInProductor(productorStored.fid, data, res);
+          break;
+        case null:
+        case 'null':
+          endRequest(data, res);
+          //res.status(200).send({message: data});
+          break;
+        default:
+          res.status(404).send({message: 'default case in function traceability'});
+          break;
+      }
+    })
+    .then(undefined, function(err){
+      reject(err);
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(505).json({message: "Error 505"});
+    });
+  });
 }
 
 function searchInMerchant(fid, data, res) {
@@ -247,6 +382,7 @@ function addDataProductor(req, res){
   var productor = new Productor();
   productor.id = req.body.id;
   productor.fid = req.body.fid;
+  productor.code = req.body.code;
   productor.ubication = req.body.ubication;
   productor.name = req.body.name;
   productor.previousStage = req.body.previousStage;
@@ -270,6 +406,7 @@ function addDataAcopio(req, res){
   var acopio = new Acopio();
   acopio.id = req.body.id;
   acopio.fid = req.body.fid;
+  acopio.code = req.body.code;
   acopio.ubication = req.body.ubication;
   acopio.name = req.body.name;
   acopio.previousStage = req.body.previousStage;
@@ -293,6 +430,7 @@ function addDataCarrier(req, res){
   var carrier = new Carrier();
   carrier.id = req.body.id;
   carrier.fid = req.body.fid;
+  carrier.code = req.body.code;
   carrier.ubication = req.body.ubication;
   carrier.name = req.body.name;
   carrier.previousStage = req.body.previousStage;
@@ -337,6 +475,9 @@ function addDataMerchant(req, res){
 }
 
 module.exports = {
-  traceability,
+  traceabilityM,
+  traceabilityC,
+  traceabilityA,
+  traceabilityP,
   addData
 };
