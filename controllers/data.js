@@ -13,7 +13,7 @@ function endRequest(datas, res) {
 }
 
 async function traceabilityM(req, res) {
-  var query = { code: req.body.QR, id: req.body.ID };
+  var query = { code: req.body.Code, id: req.body.ID };
   var data = [];
   return new Promise(function(resolve, reject) {
     Merchant.findOne(query)
@@ -76,7 +76,7 @@ async function traceabilityM(req, res) {
 }
 
 async function traceabilityC(req, res) {
-  var query = { code: req.body.QR, id: req.body.ID };
+  var query = { code: req.body.Code, id: req.body.ID };
   var data = [];
   return new Promise(function(resolve, reject) {
     Carrier.findOne(query)
@@ -120,7 +120,7 @@ async function traceabilityC(req, res) {
 }
 
 async function traceabilityA(req, res) {
-  var query = { code: req.body.QR, id: req.body.ID };
+  var query = { code: req.body.Code, id: req.body.ID };
   var data = [];
   return new Promise(function(resolve, reject) {
     Acopio.findOne(query)
@@ -164,7 +164,7 @@ async function traceabilityA(req, res) {
 }
 
 async function traceabilityP(req, res) {
-  var query = { code: req.body.QR, id: req.body.ID };
+  var query = { code: req.body.Code, id: req.body.ID };
   var data = [];
   return new Promise(function(resolve, reject) {
     Productor.findOne(query)
